@@ -1,105 +1,130 @@
 <template>
-  <div class="base">
-    <table class="table is-hoverable is-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Client</th>
-          <th>PM</th>
-          <th>Budget Hours</th>
-          <th>Allocated Hours</th>
-          <th>Registered Hours</th>
-          <th>Booking Stage</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>1402</th>
-          <td>sample</td>
-          <td>38</td>
-          <td>23</td>
-          <td>12</td>
-          <td>3</td>
-          <td>68</td>
-          <td>
-            <div class="select is-small is-white is-fullwidth">
-              <!-- <select>
-                <option>NO Proposal OK</option>
-                <option>NO Timing</option>
-                <option>Ready - Cip</option>
-                <option>Ready - Dani</option>
-                <option>Ready - Marci</option>
-                <option>Ready - Attila</option>
-                <option>Ready - Andris</option>
-              </select> -->
-              <select v-model="selectedManager" v-on:change="onManagerSelect">
-                <option v-for="(manager, index) in projectManagers" :key="index" :value="manager">{{ manager.status }} - {{ manager.name }}</option>
-              </select>
+  <div class="background">
+    <section id="blueheader" class="hero is-info">
+      <div class="hero-body">
+        <!-- Main container -->
+        <nav class="level">
+          <!-- Left side -->
+          <div class="level-left">
+            <div class="level-item">
+              <p class="title">Planner</p>
             </div>
-            </td>
-        </tr>
-        <tr>
-          <th>1402</th>
-          <td>sample</td>
-          <td>38</td>
-          <td>23</td>
-          <td>12</td>
-          <td>3</td>
-          <td>68</td>
-          <td>
-            <div class="select is-small is-white is-fullwidth">
-              <select>
-                <option>Select dropdown</option>
-                <option>With options</option>
-              </select>
+          </div>
+
+          <!-- Right side -->
+          <div class="level-right">
+            <p class="level-item"><a class="button is-link is-inverted is-outlined">Account</a></p>
+            <p class="level-item"><a class="button is-link is-inverted is-outlined">Log Out</a></p>
+          </div>
+        </nav>
+      </div>
+    </section>
+    <section class="hero is-white box">
+      <div id="small-hero-body" class="hero-body">
+        <!-- Main container -->
+        <nav class="level">
+          <!-- Left side -->
+          <div class="level-left">
+            <div class="level-item">
+              <p class="subtitle is-6">Logged in as <strong>{{ResourceName}}</strong></p>
             </div>
-            <!-- <div class="circle is-primary"></div> -->
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+
+          <!-- Right side -->
+          <div class="level-right">
+            <p class="level-item"><router-link to="/"><a class="button is-light" @click="activeBtn = 'btn1'" :class="{'is-active is-success': activeBtn == 'btn1'}">Scheduler</a></router-link></p>
+            <p class="level-item"><router-link to="./timesheet"><a class="button is-light" @click="activeBtn = 'btn2'" :class="{'is-active is-success': activeBtn == 'btn2'}">Timesheet</a></router-link></p>
+            <p class="level-item"><router-link to="./settings"><a class="button is-light" @click="activeBtn = 'btn3'" :class="{'is-active is-success': activeBtn == 'btn3'}">Settings</a></router-link></p>
+          </div>
+        </nav>
+      </div>
+    </section>
+    <div class="columns">
+      <div id="side-column" class="column is-2 box">
+        <router-link to="./projectstable"><a class="button sidebutton is-light" @click="activeBtn = 'btn4'" :class="{'is-active is-success': activeBtn == 'btn4'}">Projects</a></router-link>
+        <router-link to="./resourcetable"><a class="button sidebutton is-light" @click="activeBtn = 'btn5'" :class="{'is-active is-success': activeBtn == 'btn5'}">Resources</a></router-link>
+      </div>
+<!-- CONTENT -->
+      <div id="content-column" class="column box">
+          <router-view></router-view>
+      </div>
+    </div>
+<!-- FOOTER -->
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>Geri's Test Project</p>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ProjectsTable',
+  name: 'MainPage',
   data () {
     return {
-      selectedManager: { name: 'Béla', status: 'Ready', color: 'red' },
-      projectManagers: [
-        { name: 'Andris', status: 'Ready', color: 'red' },
-        { name: 'Béla', status: 'Ready', color: 'red' },
-        { name: 'Józsi', status: 'Ready', color: 'red' }
-      ]
-    }
-  },
-  methods: {
-    onManagerSelect () {
-      console.log(this.selectedManager)
+      ResourceName: 'Gergely Kis',
+      activeBtn: ' '
     }
   }
 }
 </script>
 
 <style scoped>
-.base {
-  padding:10px
+
+#blueheader {
+  margin-bottom:9px;
 }
-.table {
-  width:100%;
+
+.background {
+  background-color:#f4f4f4;
 }
-th, td {
-  text-align:center
+.hero-body {
+  padding:20px;
 }
-select {
-  background-color:green;
-  color:white
+
+#small-hero-body {
+  padding:5px;
 }
-.circle {
-  width: 10px;
-  height: 10px;
-  border-radius: 20px;
+
+.box {
+  padding:3px;
+  margin:5px;
 }
+.columns{
+  margin:0px;
+  text-align:center;
+}
+
+.column {
+  text-align:center;
+}
+
+.sidebutton {
+  margin:5px;
+  width:95%
+}
+
+hr {
+  width:60%;
+  margin: 10% auto
+}
+
+.subtitle {
+  padding-left:9px
+}
+
+#side-column {
+  max-width:200px;
+}
+#content-column {
+  background-color:white;
+  text-align:left;
+}
+
+.footer {
+  padding:20px;
+    background-color:#f4f4f4
+}
+
 </style>
